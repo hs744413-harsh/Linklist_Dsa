@@ -29,19 +29,14 @@ def reverse(head):
 def add_one(head):
   if head is None:
     return Node(1)
-
   new_head = reverse(head)
   temp = new_head
   carry = 1
-  
   while temp:
     num = temp.val + carry
     carry = num//10
     temp.val = num%10
-    if carry == 0:
-        break
     temp = temp.next
-    
   if carry:
     new = Node(carry)
     new.next = reverse(new_head)
@@ -49,11 +44,33 @@ def add_one(head):
   head = reverse(new_head)
   return head
 
+# RECURSIVE METHOD OR BACKTRACKING>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>-_-?
+def addCarry(head):
+  if head is None:
+    return 1
+  num = head.val + addCarry(head.next)
+
+  head.val = num%10
+  carry = num//10
+  return carry
+  
+def addOne(head):
+  if head is None:
+    return Node(1)
+  carry = addCarry(head)
+
+  if carry:
+    new_head = Node(carry)
+    new_head.next = head
+    return new_head
+
+  return head
+
 arr = [1,2,2,2,2,9]
 head = conv(arr)
 Print(head)
 print("\n")
-head2 = add_one(head)
+head2 = addOne(head)
 Print(head2)
 
       
